@@ -1,0 +1,119 @@
+<div class="source-link">
+  <a id="show-source" href="#" data="css-layer-highlight.html">Show source code</a>
+</div>
+
+<div class="sample-container">
+  <div>
+
+  </div>
+</div>
+
+<script src="js/html2canvas.min.js"></script>
+<script src="js/three.min.js"></script>
+<script src="js/pdf.min.js"></script>
+
+<script src="js/3dflipbook.min.js"></script>
+
+<script type="text/javascript">
+  (function() {
+    var html = [
+      '<div class="page">',
+        '<a href="#" class="link go-page" data-page="1" style="top: 160px; left: 80px; width: 680px; height: 45px;"></a>',
+        '<a href="#" class="link go-page" data-page="2" style="top: 225px; left: 80px; width: 680px; height: 45px;"></a>',
+        '<a href="#" class="link go-page" data-page="3" style="top: 295px; left: 80px; width: 680px; height: 45px;"></a>',
+        '<a href="#" class="link go-page" data-page="4" style="top: 360px; left: 80px; width: 680px; height: 45px;"></a>',
+        '<a href="#" class="link go-page" data-page="5" style="top: 425px; left: 80px; width: 680px; height: 45px;"></a>',
+
+        '<a href="#" class="link go-page" data-page="6" style="top: 530px; left: 80px; width: 160px; height: 45px;"></a>',
+        '<a href="#" class="link go-page" data-page="7" style="top: 595px; left: 80px; width: 680px; height: 45px;"></a>',
+          '<a href="#" class="link go-page" data-page="8" style="top: 660px; left: 130px; width: 630px; height: 45px;"></a>',
+          '<a href="#" class="link go-page" data-page="9" style="top: 725px; left: 130px; width: 630px; height: 45px;"></a>',
+          '<a href="#" class="link go-page" data-page="10" style="top: 790px; left: 130px; width: 630px; height: 45px;"></a>',
+        '<a href="#" class="link go-page" data-page="11" style="top: 860px; left: 80px; width: 680px; height: 45px;"></a>',
+          '<a href="#" class="link go-page" data-page="12" style="top: 925px; left: 130px; width: 630px; height: 45px;"></a>',
+          '<a href="#" class="link go-page" data-page="13" style="top: 990px; left: 130px; width: 630px; height: 45px;"></a>',
+        '<a href="#" class="link go-page" data-page="14" style="top: 1055px; left: 80px; width: 680px; height: 45px;"></a>',
+        '<a href="#" class="link go-page" data-page="15" style="top: 1120px; left: 80px; width: 680px; height: 45px;"></a>',
+
+        '<a href="#" class="link go-page" data-page="16" style="top: 1250px; left: 80px; width: 680px; height: 45px;"></a>',
+      '</div>'
+    ].join(''),
+    css = [
+      '.page {',
+        'position: relative;',
+        'width: 1024px;',
+        'height: 1448px;',
+        'background-size: 100%;',
+      '}',
+      '.page .link {',
+        'background-color: white;',
+        'display: block;',
+        'position: absolute;',
+        'opacity: 0.1;',
+      '}',
+      '.page .link:hover {',
+        'opacity: 0.2;',
+      '}',
+      '.page .link:active {',
+        'opacity: 0.3;',
+      '}'
+    ].join(''),
+    js = [
+      'function init(c, a) {',
+        'c.find(".page .go-page").on("click", function(e) {',
+          'e.preventDefault();',
+          'var page = parseInt(a.$(e.target).attr("data-page"));',
+          'console.log(page);',
+          'a.scene.ctrl.goToPage(page-1);',
+        '});',
+        'return {};',
+      '}; init'
+    ].join('');
+
+    $('.sample-container div').FlipBook({
+      pageCallback: function(n) {
+        return {
+          type: 'image',
+          src: 'books/image/highlight/1.jpg',
+          interactive: false
+        };
+      },
+      pages: 6,
+      propertiesCallback: function(props) {
+        props.cssLayersLoader = function(n, clb) {
+          if(!n) {
+            clb([{
+              css: css,
+              html: html,
+              js: js
+            }]);
+          }
+          else {
+            clb([{
+              html: html,
+              js: js
+            }]);
+          }
+        };
+        return props;
+      },
+      template: {
+        html: 'templates/default-book-view.html',
+        styles: [
+          'css/short-white-book-view.css'
+        ],
+        links: [
+          {
+            rel: 'stylesheet',
+            href: 'css/font-awesome.min.css'
+          }
+        ],
+        script: 'js/default-book-view.js',
+        sounds: {
+          startFlip: 'sounds/start-flip.mp3',
+          endFlip: 'sounds/end-flip.mp3'
+        }
+      }
+    });
+  })();
+</script>
